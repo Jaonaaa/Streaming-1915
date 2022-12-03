@@ -6,8 +6,7 @@
 .btnMusic
 {
     -fx-background-color:white;
-    -fx-border-radius:0;
-    -fx-cursor:pointer;
+    -fx-background-radius:0 0 0 9px;
 }
 
 
@@ -21,6 +20,7 @@
     -fx-border-radius : 0 !important ;
     -fx-text-fill : black !important;
     -fx-background-color:white !important;
+    -fx-background-radius:0px 9px 0px 0px;
 }
 
 

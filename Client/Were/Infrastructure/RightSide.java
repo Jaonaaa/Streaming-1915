@@ -4,15 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-
-import java.io.File;
-
+import java.io.FileInputStream;
 import Were.Runner.*;
 
 public class RightSide extends VBox {
@@ -20,19 +21,29 @@ public class RightSide extends VBox {
     Media media;
     MediaPlayer mediaPlayer;
     MediaView mediaView;
-    Button btnPlayAndPause = new Button("Pause");
+    Button btnPlayAndPause = new Button();
     Button restart = new Button("Restart");
-    Button changeVideo = new Button("ChangeVideo");
+    Button changeVideo = new Button("Change Video");
     HBox funcVideo = new HBox();
     Slider sliderVideo = new Slider();
     VideoRunner videoRun;
+    ImageView imageViewPause;
+    ImageView imageViewPlay;
+    ImageView imagePicture;
     App app;
+    boolean goVideo = false;
 
-    public RightSide(App app) {
+    public RightSide(App app) throws Exception {
         super();
+        this.imageViewPause = new ImageView(new Image(new FileInputStream("./Assets/pause.jpg")));
+        this.imageViewPlay = new ImageView(new Image(new FileInputStream("./Assets/play.png")));
+        this.imageViewPause.setFitHeight(30);
+        this.imageViewPause.setFitWidth(30);
+        this.imageViewPlay.setFitHeight(30);
+        this.imageViewPlay.setFitWidth(30);
         this.app = app;
+        this.setStyle("-fx-background-color:white;");
         prepareVideo();
-
     }
 
     public void prepareVideo() {
@@ -40,7 +51,7 @@ public class RightSide extends VBox {
         this.media = new Media(app.getFileToLoad().toURI().toString());
         this.mediaPlayer = new MediaPlayer(media);
         this.videoRun = new VideoRunner(this);
-        this.mediaPlayer.setOnReady(videoRun);
+        // this.mediaPlayer.setOnReady(videoRun);
         btnPlayAndPause.setStyle("-fx-font-family:Poppins;");
         restart.setStyle("-fx-font-family:Poppins;");
         setUpBtn();
@@ -49,16 +60,20 @@ public class RightSide extends VBox {
     public void setUpBtn() {
 
         // PAUSE AND PLAY VIDEO
+        this.btnPlayAndPause.setGraphic(this.imageViewPause);
+        this.btnPlayAndPause.setContentDisplay(ContentDisplay.CENTER);
+        this.restart.setPrefHeight(40);
+        this.changeVideo.setPrefHeight(40);
         this.btnPlayAndPause.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
                 if (mediaPlayer.statusProperty().getValue().toString().equals("PLAYING")) {
                     mediaPlayer.pause();
-                    btnPlayAndPause.setText("Play");
+                    btnPlayAndPause.setGraphic(imageViewPlay);
                     ;
                 } else {
                     mediaPlayer.play();
-                    btnPlayAndPause.setText("Pause");
+                    btnPlayAndPause.setGraphic(imageViewPause);
                 }
             }
         });
@@ -68,7 +83,8 @@ public class RightSide extends VBox {
             public void handle(ActionEvent arg0) {
                 mediaPlayer.stop();
                 mediaPlayer.play();
-                btnPlayAndPause.setText("Pause");
+                btnPlayAndPause.setGraphic(imageViewPause);
+                ;
             }
         });
 
@@ -100,6 +116,20 @@ public class RightSide extends VBox {
      */
     public Button getChangeVideo() {
         return changeVideo;
+    }
+
+    /**
+     * @return the goVideo
+     */
+    public boolean isGoVideo() {
+        return goVideo;
+    }
+
+    /**
+     * @param goVideo the goVideo to set
+     */
+    public void setGoVideo(boolean goVideo) {
+        this.goVideo = goVideo;
     }
 
     /**
@@ -135,6 +165,48 @@ public class RightSide extends VBox {
      */
     public void setRestart(Button restart) {
         this.restart = restart;
+    }
+
+    /**
+     * @return the imageViewPause
+     */
+    public ImageView getImageViewPause() {
+        return imageViewPause;
+    }
+
+    /**
+     * @param imageViewPause the imageViewPause to set
+     */
+    public void setImageViewPause(ImageView imageViewPause) {
+        this.imageViewPause = imageViewPause;
+    }
+
+    /**
+     * @return the imageViewPlay
+     */
+    public ImageView getImageViewPlay() {
+        return imageViewPlay;
+    }
+
+    /**
+     * @param imageViewPlay the imageViewPlay to set
+     */
+    public void setImageViewPlay(ImageView imageViewPlay) {
+        this.imageViewPlay = imageViewPlay;
+    }
+
+    /**
+     * @return the imagePicture
+     */
+    public ImageView getImagePicture() {
+        return imagePicture;
+    }
+
+    /**
+     * @param imagePicture the imagePicture to set
+     */
+    public void setImagePicture(ImageView imagePicture) {
+        this.imagePicture = imagePicture;
     }
 
     /**

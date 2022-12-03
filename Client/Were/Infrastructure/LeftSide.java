@@ -21,18 +21,21 @@ public class LeftSide extends VBox {
     Vector<Button> buttons = new Vector<Button>();
     ScrollPane scrollPane;
     VBox mediaScroll = new VBox();
+    boolean canClickButton = true;
 
     public LeftSide(App app) {
         super();
         this.app = app;
-        this.setPrefWidth(300);
+        this.setPrefWidth(250);
         this.setPrefHeight(app.getMax_height() - 30);
 
         this.getChildren().add(title);
         setUpTitle();
+        this.setStyle("-fx-background-radius:0px 0px 9px 0px !important;");
+        this.mediaScroll.setStyle("-fx-background-radius:0px 0px 9px 0px !important;");
         setUpButtons();
         this.setAlignment(Pos.TOP_CENTER);
-
+        this.mediaScroll.setMaxWidth(250);
         scrollPane = new ScrollPane();
         scrollPane.setContent(this.mediaScroll);
         scrollPane.setPrefHeight(app.getMax_height() - 30);
@@ -40,14 +43,16 @@ public class LeftSide extends VBox {
 
         scrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+        this.scrollPane
+                .setStyle("-fx-background-radius: 20px !important;");
         this.getChildren().add(scrollPane);
     }
 
     public void setUpTitle() {
         title.setStyle(
-                "-fx-font-size:24px;-fx-font-family:Poppins;-fx-background-color:rgba(3,67,135,1);-fx-text-fill:white;");
+                "-fx-font-size:24px;-fx-font-family:Poppins;-fx-background-color: rgb(20,51,84);-fx-text-fill:white;");
         title.setPrefHeight(65);
-        title.setPrefWidth(300);
+        title.setPrefWidth(250);
         title.setMinHeight(65);
         title.setAlignment(Pos.CENTER);
     }
@@ -57,18 +62,26 @@ public class LeftSide extends VBox {
         for (int i = 0; i < listMedia.size(); i++) {
             Image bgImage = null;
             try {
-                bgImage = new Image(new FileInputStream("/Users/paul/Desktop/JavaFx/Client/closer.png"));
+                if (listMedia.get(i).contains(".mp3")) {
+                    bgImage = new Image(new FileInputStream("./Assets/musique.png"));
+                } else if (listMedia.get(i).contains(".mp4")) {
+                    bgImage = new Image(new FileInputStream("./Assets/video.png"));
+                } else if (listMedia.get(i).contains(".jpg") || listMedia.get(i).contains(".png")) {
+                    bgImage = new Image(new FileInputStream("./Assets/paysage.jpg"));
+
+                }
+
             } catch (FileNotFoundException e) {
                 System.out.println(e);
             }
 
             ImageView imageView = new ImageView(bgImage);
-            imageView.setFitHeight(20);
+            imageView.setFitHeight(35);
             imageView.setFitWidth(30);
 
             RowMedia btn = new RowMedia(listMedia.get(i), this);
             btn.setContentDisplay(ContentDisplay.LEFT);
-            btn.setPrefWidth(250);
+            btn.setPrefWidth(240);
             btn.setMinHeight(50);
             btn.setBackground(null);
             btn.setGraphic(imageView);
@@ -86,6 +99,62 @@ public class LeftSide extends VBox {
      */
     public App getApp() {
         return app;
+    }
+
+    /**
+     * @return the buttons
+     */
+    public Vector<Button> getButtons() {
+        return buttons;
+    }
+
+    /**
+     * @param buttons the buttons to set
+     */
+    public void setButtons(Vector<Button> buttons) {
+        this.buttons = buttons;
+    }
+
+    /**
+     * @return the scrollPane
+     */
+    public ScrollPane getScrollPane() {
+        return scrollPane;
+    }
+
+    /**
+     * @param scrollPane the scrollPane to set
+     */
+    public void setScrollPane(ScrollPane scrollPane) {
+        this.scrollPane = scrollPane;
+    }
+
+    /**
+     * @return the mediaScroll
+     */
+    public VBox getMediaScroll() {
+        return mediaScroll;
+    }
+
+    /**
+     * @param mediaScroll the mediaScroll to set
+     */
+    public void setMediaScroll(VBox mediaScroll) {
+        this.mediaScroll = mediaScroll;
+    }
+
+    /**
+     * @return the canClickButton
+     */
+    public boolean isCanClickButton() {
+        return canClickButton;
+    }
+
+    /**
+     * @param canClickButton the canClickButton to set
+     */
+    public void setCanClickButton(boolean canClickButton) {
+        this.canClickButton = canClickButton;
     }
 
     /**

@@ -33,9 +33,11 @@ public class Header extends HBox {
         // btnCloseStage.setGraphic(imageView);
         btnCloseStage.getStyleClass().add("closer");
         btnCloseStage.setStyle("-fx-background-color:transparent;-fx-text-fill:white;");
-        this.setStyle("-fx-background-color: rgb(20,51,84) ;");
+        // btnCloseStage.setClip(this);
+        this.setStyle("-fx-background-color: rgb(20,51,84) ;-fx-background-radius:9px 9px 0px 0px !important;");
         this.setPrefWidth(app.getMax_width());
         this.setAlignment(Pos.CENTER_RIGHT);
+
         // btnCloseStage.setPadding(new Insets(10, 10, 10, 10));
         // ;
         this.getChildren().add(btnCloseStage);

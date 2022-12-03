@@ -66,6 +66,10 @@ public class Multimedia {
         System.out.println(path);
         int divider = 10;
         byte[] bytes = Files.readAllBytes(path);
+        if (bytes.length > 1000000) {
+            divider += bytes.length / 1000000;
+        }
+        System.out.println("The file is divider by " + divider);
         System.out.println("SIZE :" + bytes.length);
         ByteBuffer byteBuff = ByteBuffer.wrap(bytes);
         Vector<byte[]> bytesList = new Vector<byte[]>();
@@ -84,6 +88,7 @@ public class Multimedia {
             byteBuff.get(bytesList.get(i), 0, bytesList.get(i).length);
         }
         for (int i = 0; i < bytesList.size(); i++) {
+            System.out.println("Sending " + i);
             dataOut.writeObject(bytesList.get(i));
         }
         System.out.println("File sended ");

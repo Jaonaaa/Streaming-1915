@@ -57,9 +57,7 @@ public class ServerRun implements Runnable {
                     stateOk = true;
                     byte[] bytes = multi.getHisByte(new File(msg));
                     dataOut.writeInt(bytes.length);
-                    System.out.println("Size of the bytes send " + bytes.length);
-                    System.out.println();
-                    dataOut.writeObject(bytes);
+                    multi.tranferingSocket(new File(msg), dataOut);
                 }
 
                 if (msg.contains("video--")) {

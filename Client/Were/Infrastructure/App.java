@@ -9,9 +9,11 @@ import javafx.stage.StageStyle;
 import java.io.*;
 
 import Were.Connection.ClientConnection;
+import Were.MultiMedia.Multimedia;
 
 public class App extends Application {
 
+    Multimedia multi = new Multimedia();
     File fileToLoad = new File("./repository/test.mp3");
     RightSide rightSide;
     LeftSide leftSide;
@@ -32,7 +34,8 @@ public class App extends Application {
             System.out.println(e);
         }
 
-        this.primaryStage.initStyle(StageStyle.UNDECORATED);
+        // this.primaryStage.initStyle(StageStyle.UNDECORATED);
+        this.primaryStage.initStyle(StageStyle.TRANSPARENT);
         this.max_height = 600;
         this.max_width = 900;
         this.header = new Header(this);

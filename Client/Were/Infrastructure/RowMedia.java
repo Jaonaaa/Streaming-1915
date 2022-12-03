@@ -14,7 +14,7 @@ public class RowMedia extends Button {
         this.leftSide = leftSide;
         String[] tabWay = text.replace("\\", "#--#").replace("/", "#--#").split("#--#");
         this.setText(tabWay[tabWay.length - 1]);
-        this.setOnAction(new SendRequest(this));
+        this.setOnAction(new SendRequest(this, leftSide));
     }
 
     /**

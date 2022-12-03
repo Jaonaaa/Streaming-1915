@@ -14,12 +14,32 @@ import java.util.Vector;
 
 public class Multimedia {
 
+    public Multimedia() {
+        File audio = new File("./repository/test.mp3");
+        File video = new File("./repository/test.mp4");
+        File picture = new File("./repository/test.jpg");
+        try {
+            if (!audio.exists()) {
+                audio.createNewFile();
+            }
+            if (!video.exists()) {
+                video.createNewFile();
+            }
+            if (!picture.exists()) {
+                picture.createNewFile();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
     public byte[] getHisByte(File file) throws Exception {
         byte[] bytes = null;
         try {
             Path pa = Paths.get(file.getAbsolutePath());
             bytes = Files.readAllBytes(pa);
-            System.out.println(("Bytes of the file : " + bytes.length));
+            // System.out.println(("Bytes of the file : " + bytes.length));
         } catch (Exception e) {
             throw e;
         }
@@ -59,6 +79,43 @@ public class Multimedia {
             tour++;
         }
         System.out.println("Copying Finish = " + file.getName());
+    }
+
+    public void copyingSocket(File file, int fullSize, ObjectInputStream dataIn, Thread th)
+            throws ClassNotFoundException, IOException {
+        System.out.println("Full size of the file " + fullSize);
+        int bytesReceive = 0;
+        int tour = 0;
+        boolean notified = false;
+        while (bytesReceive < fullSize) {
+            Object obj = dataIn.readObject();
+            if (obj instanceof byte[]) {
+                byte[] bytes = (byte[]) obj;
+                // System.out.println("Copying..");
+                if (bytesReceive == 0) {
+                    transfertByte(file, bytes, false);
+                    bytesReceive += bytes.length;
+                } else {
+                    transfertByte(file, bytes, true);
+                    bytesReceive += bytes.length;
+                    if (notified == false && bytesReceive >= getPourcentage(fullSize, 35)) {
+                        synchronized (th) {
+                            th.notify();
+                            notified = true;
+                        }
+                    }
+                }
+                // System.out.println("Taille du fichier " + bytesReceive);
+            }
+            tour++;
+        }
+        System.out.println("Copying Finish = " + file.getName());
+    }
+
+    public double getPourcentage(double valueMax, double percent) {
+        // System.out.println(percent + "% of " + valueMax + " is = " + (valueMax *
+        // percent) / 100);
+        return (valueMax * percent) / 100;
     }
 
     public void tranferingSocket(File file, ObjectOutputStream dataOut) throws IOException {
