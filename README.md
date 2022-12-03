@@ -1,3 +1,7 @@
+# Me
+
+- SOLOARIJAONA Paul Ferdinah ETU001915
+
 ## Prérequis
 
 - Installer javafx dans votre IDE || Mettre les .jar (dans le dossier lib) dans votre  
@@ -5,7 +9,7 @@
 
 ## À propos
 
-- Ce programme est concue por faire du "Streaming" de vidé , de musique et d'image
+- Ce programme est concue por faire du "Streaming" de vidéo , de musique et d'image
 - Constituer d'un serveur et d'un client ou plusieurs client
 - Le "Streaming" dans ce programme se fait sous la facon suivante :
   - Le client se connecte dans le serveur et les médias qui sont présent
