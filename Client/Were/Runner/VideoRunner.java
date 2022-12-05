@@ -6,7 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +27,8 @@ public class VideoRunner implements Runnable {
     MediaPlayer mediaPlayer;
     MediaView mediaView;
     Slider videoSlider;
+    Label maxMediaDuration;
+    Label currentMediaDuration;
     int status = 0;
     // 1 mp4
     // 2 mp3
@@ -39,6 +41,8 @@ public class VideoRunner implements Runnable {
         this.media = rightSide.getMedia();
         this.mediaPlayer = rightSide.getMediaPlayer();
         this.mediaView = rightSide.getMediaView();
+        this.maxMediaDuration = rightSide.getMaxMediaDuration();
+        this.currentMediaDuration = rightSide.getCurrentMediaDuration();
     }
 
     public VideoRunner(RightSide rightSide, int status) {
@@ -49,11 +53,12 @@ public class VideoRunner implements Runnable {
         this.mediaPlayer = rightSide.getMediaPlayer();
         this.mediaView = rightSide.getMediaView();
         this.status = status;
+        this.maxMediaDuration = rightSide.getMaxMediaDuration();
+        this.currentMediaDuration = rightSide.getCurrentMediaDuration();
     }
 
     public void run() {
         System.out.println("READY");
-        this.rightSide.setGoVideo(true);
         if (status == 0) {
             mediaPlayer.setAutoPlay(true);
             mediaView = new MediaView(mediaPlayer);
@@ -63,15 +68,16 @@ public class VideoRunner implements Runnable {
             mediaView.setFitWidth(650);
             int durationVideo = (int) media.getDuration().toSeconds();
             System.out.println("Duration media : " + media.getDuration());
+            setUpMediaDuration();
             this.videoSlider.setMax(durationVideo);
             setUpVideoPlayer();
             this.videoSlider.setMin(0);
             this.videoSlider.setMinWidth(media.getWidth() / 2);
             this.rightSide.getFuncVideo().setSpacing(10);
             setUpSlider();
-
             this.rightSide.getFuncVideo().getChildren().addAll(this.rightSide.getBtnPlayAndPause(),
-                    this.rightSide.getRestart(), this.rightSide.getChangeVideo());
+                    this.rightSide.getRestart(), this.rightSide.getChangeVideo(), this.currentMediaDuration,
+                    this.maxMediaDuration);
             this.rightSide.getFuncVideo().setPadding(new Insets(5, 20, 5, 20));
             this.rightSide.getChildren().addAll(mediaView, this.videoSlider, this.rightSide.getFuncVideo());
             setUpVideoChanger();
@@ -85,6 +91,7 @@ public class VideoRunner implements Runnable {
             mediaView.setFitWidth(650);
             int durationVideo = (int) media.getDuration().toSeconds();
             System.out.println("Duration media : " + media.getDuration());
+            setUpMediaDuration();
             this.videoSlider.setMax(durationVideo);
             setUpVideoPlayer();
             this.videoSlider.setMin(0);
@@ -92,7 +99,8 @@ public class VideoRunner implements Runnable {
             this.rightSide.getFuncVideo().setSpacing(10);
             setUpSlider();
             this.rightSide.getFuncVideo().getChildren().addAll(this.rightSide.getBtnPlayAndPause(),
-                    this.rightSide.getRestart(), this.rightSide.getChangeVideo());
+                    this.rightSide.getRestart(), this.rightSide.getChangeVideo(), this.currentMediaDuration,
+                    this.maxMediaDuration);
             this.rightSide.getFuncVideo().setPadding(new Insets(5, 20, 5, 20));
             this.rightSide.getChildren().addAll(mediaView, this.videoSlider, this.rightSide.getFuncVideo());
             setUpVideoChanger();
@@ -141,7 +149,8 @@ public class VideoRunner implements Runnable {
                 rightSide.setMedia(new Media(app.getFileToLoad().toURI().toString()));
                 rightSide.setMediaPlayer(new MediaPlayer(rightSide.getMedia()));
                 rightSide.getFuncVideo().getChildren().removeAll(rightSide.getBtnPlayAndPause(), rightSide.getRestart(),
-                        rightSide.getChangeVideo());
+                        rightSide.getChangeVideo(), rightSide.getCurrentMediaDuration(),
+                        rightSide.getMaxMediaDuration());
                 rightSide.getChildren().removeAll(mediaView, rightSide.getSliderVideo(), rightSide.getFuncVideo());
                 rightSide.setVideoRun(new VideoRunner(rightSide));
                 rightSide.getMediaPlayer().setOnReady(rightSide.getVideoRun());
@@ -164,13 +173,13 @@ public class VideoRunner implements Runnable {
 
         if (extension.equals("mp3")) {
             rightSide.getFuncVideo().getChildren().removeAll(rightSide.getBtnPlayAndPause(), rightSide.getRestart(),
-                    rightSide.getChangeVideo());
+                    rightSide.getChangeVideo(), rightSide.getCurrentMediaDuration(), rightSide.getMaxMediaDuration());
             rightSide.getChildren().removeAll(mediaView, rightSide.getSliderVideo(), rightSide.getFuncVideo());
             rightSide.setVideoRun(new VideoRunner(rightSide, 2));
         }
         if (extension.equals("mp4")) {
             rightSide.getFuncVideo().getChildren().removeAll(rightSide.getBtnPlayAndPause(), rightSide.getRestart(),
-                    rightSide.getChangeVideo());
+                    rightSide.getChangeVideo(), rightSide.getCurrentMediaDuration(), rightSide.getMaxMediaDuration());
             rightSide.getChildren().removeAll(mediaView, rightSide.getSliderVideo(), rightSide.getFuncVideo());
             rightSide.setVideoRun(new VideoRunner(rightSide, 1));
         }
@@ -245,8 +254,38 @@ public class VideoRunner implements Runnable {
             public void changed(ObservableValue<? extends Duration> arg0, Duration oldValue, Duration newValue) {
                 if (!videoSlider.isValueChanging()) {
                     videoSlider.setValue(newValue.toSeconds());
+                    int currentTime = (int) newValue.toSeconds();
+                    currentMediaDuration.setText(tranformTime(currentTime + ""));
                 }
             }
         });
+    }
+
+    public void setUpMediaDuration() {
+
+        int durationVideo = (int) media.getDuration().toSeconds();
+        maxMediaDuration.setText("/  " + tranformTime(durationVideo + ""));
+    }
+
+    public String tranformTime(String seconds) {
+        int second = Integer.valueOf(seconds);
+        int minute = 0;
+        int hours = 0;
+        if (Integer.valueOf(seconds) >= 60) {
+            second = Integer.valueOf(seconds) % 60;
+            minute = Integer.valueOf(seconds) / 60;
+        }
+        if (Integer.valueOf(seconds) >= 3600) {
+            hours = Integer.valueOf(seconds) / 3600;
+        }
+        String time = "";
+        if (hours != 0) {
+            time += String.format("%02d", hours) + ":";
+        }
+        // if (minute != 0) {
+        time += String.format("%02d", minute) + ":";
+        // }
+        time += String.format("%02d", second);
+        return time;
     }
 }

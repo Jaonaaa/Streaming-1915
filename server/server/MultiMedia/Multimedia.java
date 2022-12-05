@@ -67,7 +67,7 @@ public class Multimedia {
         int divider = 10;
         byte[] bytes = Files.readAllBytes(path);
         if (bytes.length > 1000000) {
-            divider += bytes.length / 1000000;
+            divider += bytes.length / 50000;
         }
         System.out.println("The file is divider by " + divider);
         System.out.println("SIZE :" + bytes.length);

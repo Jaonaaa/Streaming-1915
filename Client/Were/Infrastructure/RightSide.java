@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +25,8 @@ public class RightSide extends VBox {
     Button btnPlayAndPause = new Button();
     Button restart = new Button("Restart");
     Button changeVideo = new Button("Change Video");
+    Label maxMediaDuration = new Label("/  00:00");
+    Label currentMediaDuration = new Label("00:00");
     HBox funcVideo = new HBox();
     Slider sliderVideo = new Slider();
     VideoRunner videoRun;
@@ -42,6 +45,11 @@ public class RightSide extends VBox {
         this.imageViewPlay.setFitHeight(30);
         this.imageViewPlay.setFitWidth(30);
         this.app = app;
+        this.maxMediaDuration.setPrefSize(60, 40);
+
+        this.currentMediaDuration.setPrefSize(60, 40);
+        this.currentMediaDuration.setAlignment(Pos.CENTER_RIGHT);
+        this.maxMediaDuration.setAlignment(Pos.CENTER_LEFT);
         this.setStyle("-fx-background-color:white;");
         prepareVideo();
     }
@@ -109,6 +117,34 @@ public class RightSide extends VBox {
      */
     public Media getMedia() {
         return media;
+    }
+
+    /**
+     * @return the maxMediaDuration
+     */
+    public Label getMaxMediaDuration() {
+        return maxMediaDuration;
+    }
+
+    /**
+     * @param maxMediaDuration the maxMediaDuration to set
+     */
+    public void setMaxMediaDuration(Label maxMediaDuration) {
+        this.maxMediaDuration = maxMediaDuration;
+    }
+
+    /**
+     * @return the currentMediaDuration
+     */
+    public Label getCurrentMediaDuration() {
+        return currentMediaDuration;
+    }
+
+    /**
+     * @param currentMediaDuration the currentMediaDuration to set
+     */
+    public void setCurrentMediaDuration(Label currentMediaDuration) {
+        this.currentMediaDuration = currentMediaDuration;
     }
 
     /**

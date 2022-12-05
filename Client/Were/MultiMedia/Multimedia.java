@@ -98,14 +98,14 @@ public class Multimedia {
                 } else {
                     transfertByte(file, bytes, true);
                     bytesReceive += bytes.length;
-                    if (notified == false && bytesReceive >= getPourcentage(fullSize, 35)) {
+                    if (notified == false && bytesReceive >= getPourcentage(fullSize, 40)) {
                         synchronized (th) {
                             th.notify();
                             notified = true;
                         }
                     }
                 }
-                // System.out.println("Taille du fichier " + bytesReceive);
+                System.out.println("Copying..Taille du fichier " + bytesReceive);
             }
             tour++;
         }

@@ -34,7 +34,6 @@ public class SendRequest implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent e) {
 
-        System.out.println("CAN CLICK BUTTON BEFORE " + leftSide.isCanClickButton() + " " + leftSide);
         if (leftSide.isCanClickButton()) {
             leftSide.setCanClickButton(false);
             if (rowMedia.getContent().contains(".mp3")) {
