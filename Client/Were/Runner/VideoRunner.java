@@ -1,10 +1,7 @@
 package Were.Runner;
 
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableNumberValue;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -76,11 +73,10 @@ public class VideoRunner implements Runnable {
             this.rightSide.getFuncVideo().setSpacing(10);
             setUpSlider();
             this.rightSide.getFuncVideo().getChildren().addAll(this.rightSide.getBtnPlayAndPause(),
-                    this.rightSide.getRestart(), this.rightSide.getChangeVideo(), this.currentMediaDuration,
+                    this.rightSide.getRestart(), this.currentMediaDuration,
                     this.maxMediaDuration);
             this.rightSide.getFuncVideo().setPadding(new Insets(5, 20, 5, 20));
             this.rightSide.getChildren().addAll(mediaView, this.videoSlider, this.rightSide.getFuncVideo());
-            setUpVideoChanger();
         }
         if (status == 1) {
             mediaPlayer.setAutoPlay(true);
@@ -99,11 +95,11 @@ public class VideoRunner implements Runnable {
             this.rightSide.getFuncVideo().setSpacing(10);
             setUpSlider();
             this.rightSide.getFuncVideo().getChildren().addAll(this.rightSide.getBtnPlayAndPause(),
-                    this.rightSide.getRestart(), this.rightSide.getChangeVideo(), this.currentMediaDuration,
+                    this.rightSide.getRestart(), this.currentMediaDuration,
                     this.maxMediaDuration);
             this.rightSide.getFuncVideo().setPadding(new Insets(5, 20, 5, 20));
             this.rightSide.getChildren().addAll(mediaView, this.videoSlider, this.rightSide.getFuncVideo());
-            setUpVideoChanger();
+
         }
         if (status == 2) {
             mediaPlayer.setAutoPlay(true);
@@ -127,36 +123,16 @@ public class VideoRunner implements Runnable {
             this.rightSide.getFuncVideo().setSpacing(10);
             setUpSlider();
             this.rightSide.getFuncVideo().getChildren().addAll(this.rightSide.getBtnPlayAndPause(),
-                    this.rightSide.getRestart(), this.rightSide.getChangeVideo());
+                    this.rightSide.getRestart());
             this.rightSide.getFuncVideo().setPadding(new Insets(5, 20, 5, 20));
             this.rightSide.getChildren().addAll(this.rightSide.getImagePicture(), this.videoSlider,
                     this.rightSide.getFuncVideo());
-            setUpVideoChanger();
+
         }
         if (status == 3) {
 
         }
 
-    }
-
-    public void setUpVideoChanger() {
-        // CHANGE VIDEO
-        this.rightSide.getChangeVideo().setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent arg0) {
-                mediaPlayer.stop();
-                app.setFileToLoad(new File("./repository/test.mp4"));
-                rightSide.setMedia(new Media(app.getFileToLoad().toURI().toString()));
-                rightSide.setMediaPlayer(new MediaPlayer(rightSide.getMedia()));
-                rightSide.getFuncVideo().getChildren().removeAll(rightSide.getBtnPlayAndPause(), rightSide.getRestart(),
-                        rightSide.getChangeVideo(), rightSide.getCurrentMediaDuration(),
-                        rightSide.getMaxMediaDuration());
-                rightSide.getChildren().removeAll(mediaView, rightSide.getSliderVideo(), rightSide.getFuncVideo());
-                rightSide.setVideoRun(new VideoRunner(rightSide));
-                rightSide.getMediaPlayer().setOnReady(rightSide.getVideoRun());
-                rightSide.setUpBtn();
-            }
-        });
     }
 
     public void ChangeVideo(String extension) {
@@ -173,19 +149,18 @@ public class VideoRunner implements Runnable {
 
         if (extension.equals("mp3")) {
             rightSide.getFuncVideo().getChildren().removeAll(rightSide.getBtnPlayAndPause(), rightSide.getRestart(),
-                    rightSide.getChangeVideo(), rightSide.getCurrentMediaDuration(), rightSide.getMaxMediaDuration());
+                    rightSide.getCurrentMediaDuration(), rightSide.getMaxMediaDuration());
             rightSide.getChildren().removeAll(mediaView, rightSide.getSliderVideo(), rightSide.getFuncVideo());
             rightSide.setVideoRun(new VideoRunner(rightSide, 2));
         }
         if (extension.equals("mp4")) {
             rightSide.getFuncVideo().getChildren().removeAll(rightSide.getBtnPlayAndPause(), rightSide.getRestart(),
-                    rightSide.getChangeVideo(), rightSide.getCurrentMediaDuration(), rightSide.getMaxMediaDuration());
+                    rightSide.getCurrentMediaDuration(), rightSide.getMaxMediaDuration());
             rightSide.getChildren().removeAll(mediaView, rightSide.getSliderVideo(), rightSide.getFuncVideo());
             rightSide.setVideoRun(new VideoRunner(rightSide, 1));
         }
         if (extension.equals("jpg")) {
-            rightSide.getFuncVideo().getChildren().removeAll(rightSide.getBtnPlayAndPause(), rightSide.getRestart(),
-                    rightSide.getChangeVideo());
+            rightSide.getFuncVideo().getChildren().removeAll(rightSide.getBtnPlayAndPause(), rightSide.getRestart());
             rightSide.getChildren().removeAll(mediaView, rightSide.getSliderVideo(), rightSide.getFuncVideo());
             rightSide.setVideoRun(new VideoRunner(rightSide, 3));
             showImage();

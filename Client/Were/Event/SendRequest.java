@@ -1,6 +1,5 @@
 package Were.Event;
 
-import java.awt.event.*;
 import java.io.ObjectOutputStream;
 import java.io.File;
 import java.io.IOException;

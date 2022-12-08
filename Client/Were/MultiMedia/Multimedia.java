@@ -98,7 +98,7 @@ public class Multimedia {
                 } else {
                     transfertByte(file, bytes, true);
                     bytesReceive += bytes.length;
-                    if (notified == false && bytesReceive >= getPourcentage(fullSize, 40)) {
+                    if (notified == false && bytesReceive >= getPourcentage(fullSize, 25)) {
                         synchronized (th) {
                             th.notify();
                             notified = true;

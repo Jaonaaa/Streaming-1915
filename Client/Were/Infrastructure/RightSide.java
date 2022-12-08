@@ -24,7 +24,6 @@ public class RightSide extends VBox {
     MediaView mediaView;
     Button btnPlayAndPause = new Button();
     Button restart = new Button("Restart");
-    Button changeVideo = new Button("Change Video");
     Label maxMediaDuration = new Label("/  00:00");
     Label currentMediaDuration = new Label("00:00");
     HBox funcVideo = new HBox();
@@ -71,7 +70,6 @@ public class RightSide extends VBox {
         this.btnPlayAndPause.setGraphic(this.imageViewPause);
         this.btnPlayAndPause.setContentDisplay(ContentDisplay.CENTER);
         this.restart.setPrefHeight(40);
-        this.changeVideo.setPrefHeight(40);
         this.btnPlayAndPause.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
@@ -148,13 +146,6 @@ public class RightSide extends VBox {
     }
 
     /**
-     * @return the changeVideo
-     */
-    public Button getChangeVideo() {
-        return changeVideo;
-    }
-
-    /**
      * @return the goVideo
      */
     public boolean isGoVideo() {
@@ -166,13 +157,6 @@ public class RightSide extends VBox {
      */
     public void setGoVideo(boolean goVideo) {
         this.goVideo = goVideo;
-    }
-
-    /**
-     * @param changeVideo the changeVideo to set
-     */
-    public void setChangeVideo(Button changeVideo) {
-        this.changeVideo = changeVideo;
     }
 
     /**
