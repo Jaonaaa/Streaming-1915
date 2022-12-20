@@ -20,7 +20,7 @@ public class Server {
         System.out.println("waiting for a client to connect...");
         this.serverSocket = new ServerSocket(port);
 
-        while (true) {
+        while(!this.serverSocket.isClosed()) {
             Socket socket = this.serverSocket.accept();
             Thread th = new Thread(new ServerRun(socket));
             th.start();

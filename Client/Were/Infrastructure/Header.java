@@ -22,7 +22,7 @@ public class Header extends HBox {
         this.app = app;
         Image bgImage = null;
         try {
-            bgImage = new Image(new FileInputStream("/Users/paul/Desktop/JavaFx/Client/closer.png"));
+            bgImage = new Image(new FileInputStream("./closer.png"));
         } catch (FileNotFoundException e) {
             System.out.println(e);
         }

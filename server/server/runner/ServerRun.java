@@ -40,7 +40,7 @@ public class ServerRun implements Runnable {
         dataOut.writeObject(listMediaPicture);
         String msg = "";
 
-        while (true) {
+        while (!socket.isClosed()) {
             try {
                 System.out.println("Reading msg");
                 msg = (String) dataIn.readObject();
