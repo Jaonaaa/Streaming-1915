@@ -17,7 +17,7 @@ public class App extends Application {
     File fileToLoad = new File("./repository/test.mp3");
     RightSide rightSide;
     LeftSide leftSide;
-    
+
     Stage primaryStage = new Stage();
     Header header;
     HBox content = new HBox();
@@ -40,7 +40,7 @@ public class App extends Application {
         this.max_height = 600;
         this.max_width = 900;
         this.header = new Header(this);
-        
+
         rightSide = new RightSide(this);
         leftSide = new LeftSide(this);
         content.getChildren().addAll(leftSide, rightSide);
